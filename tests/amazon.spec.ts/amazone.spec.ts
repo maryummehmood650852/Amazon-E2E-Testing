@@ -12,9 +12,14 @@ test('Amazon login', async ({ page }) => {
 
   await page.getByRole('button', { name: 'Continue' }).click();
 
-  await page
-    .getByRole('textbox', { name: 'Password' })
-    .fill(process.env.AMAZON_PASSWORD!);
+  await page.waitForLoadState('domcontentloaded');
+
+  await page.locator('#ap_password').waitFor({
+    state: 'visible',
+    timeout: 30000
+  });
+
+  await page.locator('#ap_password').fill(process.env.AMAZON_PASSWORD!);
 
   await page.getByRole('button', { name: 'Sign in' }).click();
 });
