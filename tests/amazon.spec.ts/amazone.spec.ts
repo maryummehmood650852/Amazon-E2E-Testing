@@ -2,6 +2,8 @@ import 'dotenv/config';
 import { test, expect } from '@playwright/test';
 
 test('Amazon login', async ({ page }) => {
+  test.skip(!!process.env.CI, 'Amazon live login is skipped in GitHub Actions');
+
   await page.goto('https://www.amazon.com/');
 
   await page.getByRole('link', { name: 'Hello, sign in Account & Lists' }).click();
